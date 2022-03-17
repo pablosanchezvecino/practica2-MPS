@@ -1,0 +1,10 @@
+- setItem(5)
+- setItem(null)
+
+- setNext(new DequeNode(5, null, null))
+- setNext(null)
+
+- setPrevious(new DequeNode())
+- setPrevious(null)
+
+
