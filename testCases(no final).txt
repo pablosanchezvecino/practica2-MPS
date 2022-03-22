@@ -1,10 +1,29 @@
-- setItem(5)
-- setItem(null)
+DoubleLinkedListQueueTest
 
-- setNext(new DequeNode(5, null, null))
-- setNext(null)
+    Inicialización correcta de la cola
 
-- setPrevious(new DequeNode())
-- setPrevious(null)
+    Size (parametrizado con para probar con distintos tamaños)
+
+    Links (comprueba que previous y next son correctos para todos los nodos de la cola)
+
+    AppendLeft partiendo de size = 0
+    AppendLeft partiendo de size > 0
+    AppendLeft con argumento null
+
+    Append partiendo de size = 0
+    Append partiendo de size > 0
+    Append con argumento null
+
+    deleteFirst partiendo de size = 0
+    deleteFirst partiendo de size = 1
+    deleteFirst partiendo de size = 2
+    deleteFirst partiendo de size > 2
+
+    deleteLast partiendo de size = 0
+    deleteLast partiendo de size = 1
+    deleteLast  partiendo de size = 2
+    deleteLast  partiendo de size > 2
+
+
 
 

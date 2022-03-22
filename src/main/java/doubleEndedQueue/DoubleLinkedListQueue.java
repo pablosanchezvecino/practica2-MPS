@@ -14,11 +14,12 @@ public class DoubleLinkedListQueue implements DoubleEndedQueue {
 
     @Override
     public void append(DequeNode node) {
+        if (node == null) throw new IllegalArgumentException();
+
         if (size == 0) {
             first = node;
             last = node;
         } else {
-
             node.setPrevious(last);
             last.setNext(node);
             last = node;
@@ -28,6 +29,8 @@ public class DoubleLinkedListQueue implements DoubleEndedQueue {
 
     @Override
     public void appendLeft(DequeNode node) {
+        if (node == null) throw new IllegalArgumentException();
+
         if (size == 0) {
             first = node;
             last = node;
@@ -45,10 +48,6 @@ public class DoubleLinkedListQueue implements DoubleEndedQueue {
             if (size == 1) {
                 first = null;
                 last = null;
-            } else if (size == 2) {
-                DequeNode delete = first;
-                first = last;
-                delete = null;
             } else {
                 DequeNode delete = first;
                 first = first.getNext();
@@ -64,10 +63,6 @@ public class DoubleLinkedListQueue implements DoubleEndedQueue {
             if (size == 1) {
                 first = null;
                 last = null;
-            } else if (size == 2) {
-                DequeNode delete = last;
-                last = first;
-                delete = null;
             } else {
                 DequeNode delete = last;
                 last = last.getPrevious();
