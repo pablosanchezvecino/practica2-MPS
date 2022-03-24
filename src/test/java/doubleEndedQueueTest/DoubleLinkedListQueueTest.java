@@ -275,6 +275,33 @@ public class DoubleLinkedListQueueTest {
         assertThrows(IllegalArgumentException.class, () -> deque.getAt(expectedValue));
     }
 
+    @Test
+    public void find_InvalidArgument() {
+        assertThrows(IllegalArgumentException.class, () -> deque.find(null));
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {2, 5, 10})
+    public void find_ValidAndPresentArgument(int expectedValue) {
+        appendRight(10);
+
+        int actualValue = (int)deque.find(expectedValue).getItem();
+
+        assertEquals(expectedValue, actualValue);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {0, 11})
+    public void find_ValidAndNotPresentArgument(int expectedValue) {
+        appendRight(10);
+
+        DequeNode actualValue = deque.find(expectedValue);
+
+        assertNull(actualValue);
+    }
+
+
+
 
 
 }

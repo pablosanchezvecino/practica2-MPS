@@ -16,7 +16,7 @@ public class DoubleLinkedListQueue implements DoubleEndedQueue {
 
     @Override
     public void append(DequeNode node) {
-        if (node == null) throw new IllegalArgumentException();
+        if (node == null || node.getItem() == null) throw new IllegalArgumentException();
 
         if (size == 0) {
             first = node;
@@ -31,7 +31,7 @@ public class DoubleLinkedListQueue implements DoubleEndedQueue {
 
     @Override
     public void appendLeft(DequeNode node) {
-        if (node == null) throw new IllegalArgumentException();
+        if (node == null || node.getItem() == null) throw new IllegalArgumentException();
 
         if (size == 0) {
             first = node;
