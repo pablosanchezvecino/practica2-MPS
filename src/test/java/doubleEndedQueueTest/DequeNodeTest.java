@@ -1,13 +1,13 @@
 package doubleEndedQueueTest;
 
-import doubleEndedQueue.DequeNode;
+import doubleendedqueue.DequeNode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DequeNodeTest {
+class DequeNodeTest {
 
     private DequeNode<Integer> node;
 
@@ -36,7 +36,7 @@ public class DequeNodeTest {
     void setNext_ArgumentIsNewNodeWithValue5() {
         int expectedResult = 5;
 
-        node.setNext(new DequeNode(5, null, null));
+        node.setNext(new DequeNode<>(5, null, null));
 
         assertEquals(expectedResult, node.getNext().getItem());
     }
@@ -45,8 +45,8 @@ public class DequeNodeTest {
     @DisplayName("Comprueba que tras hacer un setNext() y un setPrevious() el nodo first pasa a ser el previous")
     void setNext_Test1() {
 
-        node.setNext(new DequeNode(5, null, null));
-        node.setPrevious(new DequeNode(4, null, null));
+        node.setNext(new DequeNode<>(5, null, null));
+        node.setPrevious(new DequeNode<>(4, null, null));
 
         assertTrue(node.getPrevious().isFirstNode());
         assertTrue(node.getNext().isLastNode());
@@ -57,8 +57,8 @@ public class DequeNodeTest {
     void setNext_Test2() {
         int expectedResult = 4;
 
-        node.setNext(new DequeNode(5, null, null));
-        node.getNext().setNext(new DequeNode(4, null, null));
+        node.setNext(new DequeNode<>(5, null, null));
+        node.getNext().setNext(new DequeNode<>(4, null, null));
 
         assertTrue(node.isFirstNode());
         assertTrue(node.getNext().getNext().isLastNode());

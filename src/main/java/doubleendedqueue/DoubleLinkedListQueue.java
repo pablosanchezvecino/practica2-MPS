@@ -1,11 +1,11 @@
-package doubleEndedQueue;
+package doubleendedqueue;
 
 import java.util.Comparator;
 
 public class DoubleLinkedListQueue<T> implements DoubleEndedQueue<T> {
 
     private DequeNode<T> first;
-    private DequeNode last;
+    private DequeNode<T> last;
     int size;
 
     public DoubleLinkedListQueue() {
@@ -15,22 +15,21 @@ public class DoubleLinkedListQueue<T> implements DoubleEndedQueue<T> {
     }
 
     @Override
-    public void append(DequeNode node) {
+    public void append(DequeNode<T> node) {
         if (node == null || node.getItem() == null) throw new IllegalArgumentException();
 
         if (size == 0) {
             first = node;
-            last = node;
         } else {
             node.setPrevious(last);
             last.setNext(node);
-            last = node;
         }
+        last = node;
         size++;
     }
 
     @Override
-    public void appendLeft(DequeNode node) {
+    public void appendLeft(DequeNode<T> node) {
         if (node == null || node.getItem() == null) throw new IllegalArgumentException();
 
         if (size == 0) {
@@ -51,9 +50,7 @@ public class DoubleLinkedListQueue<T> implements DoubleEndedQueue<T> {
                 first = null;
                 last = null;
             } else {
-                DequeNode delete = first;
                 first = first.getNext();
-                delete = null;
             }
             size--;
         }
@@ -66,21 +63,19 @@ public class DoubleLinkedListQueue<T> implements DoubleEndedQueue<T> {
                 first = null;
                 last = null;
             } else {
-                DequeNode delete = last;
                 last = last.getPrevious();
-                delete = null;
             }
             size--;
         }
     }
 
     @Override
-    public DequeNode peekFirst() {
+    public DequeNode<T> peekFirst() {
         return first;
     }
 
     @Override
-    public DequeNode peekLast() {
+    public DequeNode<T> peekLast() {
         return last;
     }
 
@@ -90,12 +85,12 @@ public class DoubleLinkedListQueue<T> implements DoubleEndedQueue<T> {
     }
 
     @Override
-    public DequeNode getAt(int position) {
+    public DequeNode<T> getAt(int position) {
         if (position >= size) {
             throw new IllegalArgumentException();
         }
 
-        DequeNode aux = null;
+        DequeNode<T> aux;
 
         if (position <= size / 2) {
             aux = first;
@@ -112,12 +107,12 @@ public class DoubleLinkedListQueue<T> implements DoubleEndedQueue<T> {
     }
 
     @Override
-    public DequeNode find(Object item) {
+    public DequeNode<T> find(Object item) {
         if (item == null) throw new IllegalArgumentException();
 
         boolean found = false;
 
-        DequeNode aux = first;
+        DequeNode<T> aux = first;
 
         while (!found && aux != null) {
             if (aux.getItem().equals(item)) {
@@ -130,11 +125,11 @@ public class DoubleLinkedListQueue<T> implements DoubleEndedQueue<T> {
     }
 
     @Override
-    public void delete(DequeNode node) {
+    public void delete(DequeNode<T> node) {
         if (node == null) throw new IllegalArgumentException();
 
-        DequeNode previous = node.getPrevious();
-        DequeNode next = node.getNext();
+        DequeNode<T> previous = node.getPrevious();
+        DequeNode<T> next = node.getNext();
 
         if (find(node.getItem()) != null) {
             if (previous == null && next == null) {
@@ -150,23 +145,19 @@ public class DoubleLinkedListQueue<T> implements DoubleEndedQueue<T> {
                 previous.setNext(next);
                 next.setPrevious(previous);
             }
-            node = null;
             size--;
         }
     }
 
-    public void sort(Comparator<?> comparator) {
-        sortAux(comparator);
-    }
-
-    private <T> void sortAux(Comparator<T> comparator) {
+    @Override
+    public void sort(Comparator<T> comparator) {
         if (size > 1) {
-            for (int i = 0; i < size; i++ ) {
-                DequeNode currentNode = first;
-                DequeNode next = first.getNext();
+            for (int i = 0; i < size; i++) {
+                DequeNode<T> currentNode = first;
+                DequeNode<T> next = first.getNext();
                 for (int j = 0; j < size - 1; j++) {
-                    if (comparator.compare((T) currentNode.getItem(), (T) next.getItem()) > 0) {
-                        Object temp = currentNode.getItem();
+                    if (comparator.compare(currentNode.getItem(), next.getItem()) > 0) {
+                        T temp = currentNode.getItem();
                         currentNode.setItem(next.getItem());
                         next.setItem(temp);
                     }
@@ -175,8 +166,8 @@ public class DoubleLinkedListQueue<T> implements DoubleEndedQueue<T> {
                 }
             }
         }
-    }
 
+    }
 }
 
 
