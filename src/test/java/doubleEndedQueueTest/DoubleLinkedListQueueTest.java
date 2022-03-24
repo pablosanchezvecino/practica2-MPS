@@ -304,4 +304,72 @@ public class DoubleLinkedListQueueTest {
 
 
 
+
+    @Test
+    public void delete_InvalidArgument() {
+        assertThrows(IllegalArgumentException.class, () -> deque.delete(null));
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {2, 5, 7})
+    public void delete_ValidAndPresentArgumentNotFirstAndNotLast(int positionToDelete) {
+        appendRight(10);
+
+        DequeNode delete = deque.getAt(positionToDelete);
+        DequeNode previous = delete.getPrevious();
+        DequeNode next = delete.getNext();
+
+        deque.delete(delete);
+
+        assertEquals(previous, next.getPrevious());
+        assertEquals(next, previous.getNext());
+        assertEquals(9, deque.size());
+    }
+
+    @Test
+    public void delete_ValidAndPresentArgumentAndSizeIsOne() {
+        appendRight(1);
+
+        deque.delete(deque.peekFirst());
+
+        assertNull(deque.peekFirst());
+        assertNull(deque.peekLast());
+        assertEquals(0, deque.size());
+    }
+
+    @Test
+    public void delete_ArgumentIsFirstAndSizeIsGreaterThanOne() {
+        appendRight(10);
+
+        DequeNode delete = deque.peekFirst();
+        DequeNode next = delete.getNext();
+
+        deque.delete(delete);
+
+        assertEquals(deque.peekFirst(),next);
+        assertNull(next.getPrevious());
+        assertEquals(9, deque.size());
+    }
+
+    @Test
+    public void delete_ArgumentIsLastAndSizeIsGreaterThanOne() {
+        appendRight(10);
+
+        DequeNode delete = deque.peekFirst();
+        DequeNode previous = delete.getPrevious();
+
+        deque.delete(delete);
+
+        assertTrue(previous.isLastNode());
+        assertEquals(9, deque.size());
+    }
+
+
+
+
+
+
+
+
+
 }

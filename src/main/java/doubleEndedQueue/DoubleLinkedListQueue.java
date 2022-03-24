@@ -131,12 +131,25 @@ public class DoubleLinkedListQueue implements DoubleEndedQueue {
 
     @Override
     public void delete(DequeNode node) {
+        if (node == null) throw new IllegalArgumentException();
+
         DequeNode previous = node.getPrevious();
         DequeNode next = node.getNext();
 
         if (find(node.getItem()) != null) {
-            previous.setNext(next);
-            next.setPrevious(previous);
+            if (previous == null && next == null) {
+                first = null;
+                last = null;
+            } else if (previous == null) {
+                first = next;
+            } else if (next == null) {
+                previous.setNext(null);
+                last = previous;
+            } else {
+                previous.setNext(next);
+                next.setPrevious(previous);
+            }
+            size--;
         }
     }
 
