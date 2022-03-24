@@ -2,24 +2,27 @@ package doubleEndedQueueTest;
 
 import doubleEndedQueue.DequeNode;
 import doubleEndedQueue.DoubleLinkedListQueue;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import doubleEndedQueue.IntegerComparator;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DoubleLinkedListQueueTest {
 
-    private DoubleLinkedListQueue deque;
+    private DoubleLinkedListQueue<Integer> deque;
 
     // Helper functions
 
     @BeforeEach
     public void init() {
-        deque = new DoubleLinkedListQueue();
+        deque = new DoubleLinkedListQueue<>();
     }
 
     @AfterEach
@@ -31,7 +34,7 @@ public class DoubleLinkedListQueueTest {
         int originalSize = deque.size();
 
         for (int i = originalSize + 1; i <= originalSize + numberOfNewElements; i++) {
-            deque.append(new DequeNode<Integer>(i, null, null));
+            deque.append(new DequeNode<>(i, null, null));
         }
     }
 
@@ -39,7 +42,7 @@ public class DoubleLinkedListQueueTest {
         int originalSize = deque.size();
 
         for (int i = originalSize + 1; i <= originalSize + numberOfNewElements; i++) {
-            deque.appendLeft(new DequeNode<Integer>(i, null, null));
+            deque.appendLeft(new DequeNode<>(i, null, null));
         }
     }
 
@@ -57,8 +60,8 @@ public class DoubleLinkedListQueueTest {
 
     private void check(int expectedSize, int expectedFirstValue, int expectedLastValue) {
         int actualSize = deque.size();
-        int actualFirstValue = (int)deque.peekFirst().getItem();
-        int actualLastValue = (int)deque.peekLast().getItem();
+        int actualFirstValue = (int) deque.peekFirst().getItem();
+        int actualLastValue = (int) deque.peekLast().getItem();
 
         assertEquals(expectedSize, actualSize);
         assertEquals(expectedFirstValue, actualFirstValue);
@@ -68,6 +71,7 @@ public class DoubleLinkedListQueueTest {
     // Tests
 
     @Test
+    @DisplayName("Initialization")
     public void initializationTest() {
         int expectedSize = 0;
 
@@ -76,8 +80,10 @@ public class DoubleLinkedListQueueTest {
         assertNull(deque.peekLast());
     }
 
-    @ParameterizedTest
-    @ValueSource(ints = { 0, 1, 2, 10, 38 })
+
+    @ParameterizedTest(name = "size() on deque with size = {0} returns {0}")
+    @ValueSource(ints = {0, 1, 2, 10, 38})
+    @DisplayName("Size")
     public void sizeTest(int expectedSize) {
         appendRight(expectedSize);
         int actualSize = deque.size();
@@ -85,16 +91,17 @@ public class DoubleLinkedListQueueTest {
         assertEquals(expectedSize, actualSize);
     }
 
+
     @Test
+    @DisplayName("Links")
     public void linksTest() {
         appendRight(20);
         appendLeft(10);
         deleteRight(5);
         deleteLeft(10);
 
-
-        DequeNode current = deque.peekFirst();
-        DequeNode prev = null;
+        DequeNode<Integer> current = deque.peekFirst();
+        DequeNode<Integer> prev;
 
         while (current != deque.peekLast()) {
             //System.out.println(current.getItem());
@@ -103,11 +110,10 @@ public class DoubleLinkedListQueueTest {
             assertEquals(prev.getNext(), current);
             assertEquals(current.getPrevious(), prev);
         }//System.out.println(current.getItem());
-
-
     }
 
     @Test
+    @DisplayName("appendLeft() on empty deque")
     public void appendLeft_dequeIsEmpty() {
         int expectedSize = 1;
         int expectedFirst = 33;
@@ -115,9 +121,11 @@ public class DoubleLinkedListQueueTest {
 
         deque.appendLeft(new DequeNode<>(33, null, null));
 
-        check(expectedSize, expectedFirst, expectedLast);    }
+        check(expectedSize, expectedFirst, expectedLast);
+    }
 
     @Test
+    @DisplayName("appendLeft() on nonempty deque")
     public void appendLeft_dequeIsNotEmpty() {
         int expectedSize = 11;
         int expectedFirst = 0;
@@ -130,11 +138,19 @@ public class DoubleLinkedListQueueTest {
     }
 
     @Test
+    @DisplayName("appendLeft(null) throws IllegalArgumentException")
     public void appendLeft_argumentIsNull() {
         assertThrows(IllegalArgumentException.class, () -> deque.appendLeft(null));
     }
 
     @Test
+    @DisplayName("appendLeft(node containing null item) throws IllegalArgumentException")
+    public void appendLeft_argumentIsNodeWithNullItem() {
+        assertThrows(IllegalArgumentException.class, () -> deque.appendLeft(new DequeNode<>(null, null, null)));
+    }
+
+    @Test
+    @DisplayName("append() on empty deque")
     public void append_dequeIsEmpty() {
         int expectedSize = 1;
         int expectedFirst = 99;
@@ -146,6 +162,7 @@ public class DoubleLinkedListQueueTest {
     }
 
     @Test
+    @DisplayName("append() on nonempty deque")
     public void append_dequeIsNotEmpty() {
         int expectedSize = 15;
         int expectedFirst = 1;
@@ -155,14 +172,23 @@ public class DoubleLinkedListQueueTest {
 
         deque.append(new DequeNode<>(15, null, null));
 
-        check(expectedSize, expectedFirst, expectedLast);    }
+        check(expectedSize, expectedFirst, expectedLast);
+    }
 
     @Test
+    @DisplayName("append(null) throws IllegalArgumentException")
     public void append_argumentIsNull() {
         assertThrows(IllegalArgumentException.class, () -> deque.append(null));
     }
 
     @Test
+    @DisplayName("append(node containing null item) throws IllegalArgumentException")
+    public void append_argumentIsNodeWithNullItem() {
+        assertThrows(IllegalArgumentException.class, () -> deque.append(new DequeNode<>(null, null, null)));
+    }
+
+    @Test
+    @DisplayName("deleteFirst() on empty deque")
     public void deleteFirst_dequeIsEmpty() {
         int expectedSize = 0;
 
@@ -174,6 +200,7 @@ public class DoubleLinkedListQueueTest {
     }
 
     @Test
+    @DisplayName("deleteFirst() on deque with size = 1")
     public void deleteFirst_dequeHasOneElement() {
         int expectedSize = 0;
 
@@ -186,6 +213,7 @@ public class DoubleLinkedListQueueTest {
     }
 
     @Test
+    @DisplayName("deleteFirst() on deque with size = 2")
     public void deleteFirst_dequeHasTwoElements() {
         int expectedSize = 1;
         int expectedFirst = 2;
@@ -198,6 +226,7 @@ public class DoubleLinkedListQueueTest {
     }
 
     @Test
+    @DisplayName("deleteFirst() on deque with size > 2")
     public void deleteFirst_dequeHasMoreThanTwoElements() {
         int expectedSize = 19;
         int expectedFirst = 2;
@@ -210,6 +239,7 @@ public class DoubleLinkedListQueueTest {
     }
 
     @Test
+    @DisplayName("deleteLast() on empty deque")
     public void deleteLast_dequeIsEmpty() {
         int expectedSize = 0;
 
@@ -221,6 +251,7 @@ public class DoubleLinkedListQueueTest {
     }
 
     @Test
+    @DisplayName("deleteLast() on deque with size = 1")
     public void deleteLast_dequeHasOneElement() {
         int expectedSize = 0;
 
@@ -233,6 +264,7 @@ public class DoubleLinkedListQueueTest {
     }
 
     @Test
+    @DisplayName("deleteLast() on deque with size = 2")
     public void deleteLast_dequeHasTwoElements() {
         int expectedSize = 1;
         int expectedFirst = 1;
@@ -245,6 +277,7 @@ public class DoubleLinkedListQueueTest {
     }
 
     @Test
+    @DisplayName("deleteLast() on deque with size > 2")
     public void deleteLast_dequeHasMoreThanTwoElements() {
         int expectedSize = 24;
         int expectedFirst = 1;
@@ -258,17 +291,19 @@ public class DoubleLinkedListQueueTest {
 
     // Complex methods
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "getAt({1}) on deque with size = {0}")
     @CsvSource({"3,2", "5,2", "10,9"})
+    @DisplayName("getAt() with valid arguments")
     public void getAt_ValidArgument(int size, int expectedValue) {
         appendRight(size);
-        int actualValue = (int)deque.getAt(expectedValue).getItem();
+        int actualValue = (int) deque.getAt(expectedValue).getItem();
 
         assertEquals(expectedValue, actualValue);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "getAt({1}) on deque with size = {0} throws IllegalArgumentException")
     @CsvSource({"0,2", "3,3", "5,7"})
+    @DisplayName("getAt() with invalid arguments throws IllegalArgumentException")
     public void getAt_InvalidArgument(int size, int expectedValue) {
         appendRight(size);
 
@@ -276,48 +311,48 @@ public class DoubleLinkedListQueueTest {
     }
 
     @Test
+    @DisplayName("find(null) throws IllegalArgumentException")
     public void find_InvalidArgument() {
         assertThrows(IllegalArgumentException.class, () -> deque.find(null));
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "find(node at position {0}) on deque with size = 10")
     @ValueSource(ints = {2, 5, 10})
+    @DisplayName("find() with valid and present arguments")
     public void find_ValidAndPresentArgument(int expectedValue) {
         appendRight(10);
 
-        int actualValue = (int)deque.find(expectedValue).getItem();
+        int actualValue = (int) deque.find(expectedValue).getItem();
 
         assertEquals(expectedValue, actualValue);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "find(node at position {0}) on deque with size = 10 throws IllegalArgumentException")
     @ValueSource(ints = {0, 11})
+    @DisplayName("find() with valid but absent arguments")
     public void find_ValidAndNotPresentArgument(int expectedValue) {
         appendRight(10);
 
-        DequeNode actualValue = deque.find(expectedValue);
+        DequeNode<Integer> actualValue = deque.find(expectedValue);
 
         assertNull(actualValue);
     }
 
-
-
-
-
-
     @Test
+    @DisplayName("delete(null) throws IllegalArgumentException")
     public void delete_InvalidArgument() {
         assertThrows(IllegalArgumentException.class, () -> deque.delete(null));
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "delete(node at position {0}) from deque with size = 10")
     @ValueSource(ints = {2, 5, 7})
+    @DisplayName("delete() on non terminal node")
     public void delete_ValidAndPresentArgumentNotFirstAndNotLast(int positionToDelete) {
         appendRight(10);
 
-        DequeNode delete = deque.getAt(positionToDelete);
-        DequeNode previous = delete.getPrevious();
-        DequeNode next = delete.getNext();
+        DequeNode<Integer> delete = deque.getAt(positionToDelete);
+        DequeNode<Integer> previous = delete.getPrevious();
+        DequeNode<Integer> next = delete.getNext();
 
         deque.delete(delete);
 
@@ -327,6 +362,7 @@ public class DoubleLinkedListQueueTest {
     }
 
     @Test
+    @DisplayName("delete(only node) from deque with size = 1")
     public void delete_ValidAndPresentArgumentAndSizeIsOne() {
         appendRight(1);
 
@@ -338,25 +374,27 @@ public class DoubleLinkedListQueueTest {
     }
 
     @Test
+    @DisplayName("delete(first node) from deque with size = 10")
     public void delete_ArgumentIsFirstAndSizeIsGreaterThanOne() {
         appendRight(10);
 
-        DequeNode delete = deque.peekFirst();
-        DequeNode next = delete.getNext();
+        DequeNode<Integer> delete = deque.peekFirst();
+        DequeNode<Integer> next = delete.getNext();
 
         deque.delete(delete);
 
-        assertEquals(deque.peekFirst(),next);
+        assertEquals(deque.peekFirst(), next);
         assertNull(next.getPrevious());
         assertEquals(9, deque.size());
     }
 
     @Test
+    @DisplayName("delete(last node) from deque with size = 10")
     public void delete_ArgumentIsLastAndSizeIsGreaterThanOne() {
         appendRight(10);
 
-        DequeNode delete = deque.peekFirst();
-        DequeNode previous = delete.getPrevious();
+        DequeNode<Integer> delete = deque.peekLast();
+        DequeNode<Integer> previous = delete.getPrevious();
 
         deque.delete(delete);
 
@@ -364,12 +402,44 @@ public class DoubleLinkedListQueueTest {
         assertEquals(9, deque.size());
     }
 
+    @Test
+    @DisplayName("sort")
+    public void sortTest() {
+//        appendRight(10);
+//        appendLeft(30);
+//        appendRight(10);
 
+//        DequeNode current = deque.peekFirst();
+//        while (current != null) {
+//            System.out.print(current.getItem() + " ");
+//            current = current.getNext();
+//        }
+//
+//        deque.sort(new IntegerComparator());
+//        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
+//        current = deque.peekFirst();
+//        while (current != null) {
+//            System.out.print(current.getItem() + " ");
+//            current = current.getNext();
+//        }
 
+        List<Integer> expectedOrder = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        List<Integer> actualOrder = new ArrayList<>();
 
+        appendRight(3);
+        appendLeft(5);
+        appendRight(2);
 
+        deque.sort(new IntegerComparator());
 
+        DequeNode<Integer> current = deque.peekFirst();
+        while (current != null) {
+            actualOrder.add(current.getItem());
+            current = current.getNext();
+        }
 
+        assertEquals(expectedOrder, actualOrder);
+    }
 
 
 }

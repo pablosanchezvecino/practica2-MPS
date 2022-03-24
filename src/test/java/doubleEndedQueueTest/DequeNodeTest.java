@@ -64,4 +64,5 @@ public class DequeNodeTest {
         assertTrue(node.getNext().getNext().isLastNode());
     }
 
+
 }

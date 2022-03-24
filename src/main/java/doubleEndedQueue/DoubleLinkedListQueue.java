@@ -2,9 +2,9 @@ package doubleEndedQueue;
 
 import java.util.Comparator;
 
-public class DoubleLinkedListQueue implements DoubleEndedQueue {
+public class DoubleLinkedListQueue<T> implements DoubleEndedQueue<T> {
 
-    private DequeNode first;
+    private DequeNode<T> first;
     private DequeNode last;
     int size;
 
@@ -142,6 +142,7 @@ public class DoubleLinkedListQueue implements DoubleEndedQueue {
                 last = null;
             } else if (previous == null) {
                 first = next;
+                first.setPrevious(null);
             } else if (next == null) {
                 previous.setNext(null);
                 last = previous;
@@ -149,12 +150,35 @@ public class DoubleLinkedListQueue implements DoubleEndedQueue {
                 previous.setNext(next);
                 next.setPrevious(previous);
             }
+            node = null;
             size--;
         }
     }
 
-    @Override
-    public void sort(Comparator comparator) {
-
+    public void sort(Comparator<?> comparator) {
+        sortAux(comparator);
     }
+
+    private <T> void sortAux(Comparator<T> comparator) {
+        if (size > 1) {
+            for (int i = 0; i < size; i++ ) {
+                DequeNode currentNode = first;
+                DequeNode next = first.getNext();
+                for (int j = 0; j < size - 1; j++) {
+                    if (comparator.compare((T) currentNode.getItem(), (T) next.getItem()) > 0) {
+                        Object temp = currentNode.getItem();
+                        currentNode.setItem(next.getItem());
+                        next.setItem(temp);
+                    }
+                    currentNode = next;
+                    next = next.getNext();
+                }
+            }
+        }
+    }
+
 }
+
+
+
+
