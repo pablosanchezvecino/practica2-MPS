@@ -1,5 +1,7 @@
 package doubleEndedQueue;
 
+import java.util.Comparator;
+
 public class DoubleLinkedListQueue implements DoubleEndedQueue {
 
     private DequeNode first;
@@ -85,5 +87,61 @@ public class DoubleLinkedListQueue implements DoubleEndedQueue {
     @Override
     public int size() {
         return size;
+    }
+
+    @Override
+    public DequeNode getAt(int position) {
+        if (position >= size) {
+            throw new IllegalArgumentException();
+        }
+
+        DequeNode aux = null;
+
+        if (position <= size / 2) {
+            aux = first;
+            for (int i = 1; i < position; i++) {
+                aux = aux.getNext();
+            }
+        } else {
+            aux = last;
+            for (int i = size; i > position; i--) {
+                aux = aux.getPrevious();
+            }
+        }
+        return aux;
+    }
+
+    @Override
+    public DequeNode find(Object item) {
+        if (item == null) throw new IllegalArgumentException();
+
+        boolean found = false;
+
+        DequeNode aux = first;
+
+        while (!found && aux != null) {
+            if (aux.getItem().equals(item)) {
+                found = true;
+            } else {
+                aux = aux.getNext();
+            }
+        }
+        return aux;
+    }
+
+    @Override
+    public void delete(DequeNode node) {
+        DequeNode previous = node.getPrevious();
+        DequeNode next = node.getNext();
+
+        if (find(node.getItem()) != null) {
+            previous.setNext(next);
+            next.setPrevious(previous);
+        }
+    }
+
+    @Override
+    public void sort(Comparator comparator) {
+
     }
 }

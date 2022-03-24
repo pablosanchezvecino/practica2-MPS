@@ -6,6 +6,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -254,4 +255,26 @@ public class DoubleLinkedListQueueTest {
 
         check(expectedSize, expectedFirst, expectedLast);
     }
+
+    // Complex methods
+
+    @ParameterizedTest
+    @CsvSource({"3,2", "5,2", "10,9"})
+    public void getAt_ValidArgument(int size, int expectedValue) {
+        appendRight(size);
+        int actualValue = (int)deque.getAt(expectedValue).getItem();
+
+        assertEquals(expectedValue, actualValue);
+    }
+
+    @ParameterizedTest
+    @CsvSource({"0,2", "3,3", "5,7"})
+    public void getAt_InvalidArgument(int size, int expectedValue) {
+        appendRight(size);
+
+        assertThrows(IllegalArgumentException.class, () -> deque.getAt(expectedValue));
+    }
+
+
+
 }
