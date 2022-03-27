@@ -14,6 +14,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Contains tests for DoubleLinkedListQueue class
+ */
 @DisplayName("Tests for DoubleLinkedListQueue class")
 class DoubleLinkedListQueueTest {
 

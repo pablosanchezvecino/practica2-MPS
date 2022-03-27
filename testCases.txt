@@ -1,5 +1,35 @@
 DequeNode
+    Creación de nodo con todos los argumentos nulos
+    Creación de nodo con todos los argumentos no nulos
 
+    Establecer null como item de un nodo
+    Establecer objeto no nulo como item de un nodo
+
+    Establecer null como next de un nodo
+    Establecer nodo no nulo como next de un nodo
+
+    Establecer null como previous de un nodo
+    Establecer nodo no nulo como previous de un nodo
+
+    Obtener item de un nodo que tiene null como item
+    Obtener item de un nodo que tiene un objeto no nulo como item
+
+    Obtener next de un nodo que no tiene next
+    Obtener next de un nodo que sí tiene next
+
+    Obtener previous de un nodo que no tiene previous
+    Obtener previous de un nodo que sí tiene previous
+
+    isFirstNode() en nodo que no tiene previous -> true
+    isFirstNode() en nodo que tiene previous -> false
+
+    isLastNode() en nodo que no tiene next -> true
+    isLastNode() en nodo que tiene next -> false
+
+    isNotATerminalNode() en nodo sin previous ni next -> false
+    isNotATerminalNode() en nodo que tiene previous, pero no next -> false
+    isNotATerminalNode() en nodo que tiene next, pero no previous -> false
+    isNotATerminalNode() en nodo que tiene previous y next -> true
 
 
 
