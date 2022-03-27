@@ -94,12 +94,12 @@ public class DoubleLinkedListQueue<T> implements DoubleEndedQueue<T> {
 
         if (position <= size / 2) {
             aux = first;
-            for (int i = 1; i < position; i++) {
+            for (int i = 1; i <= position; i++) {
                 aux = aux.getNext();
             }
         } else {
             aux = last;
-            for (int i = size; i > position; i--) {
+            for (int i = size - 1; i > position; i--) {
                 aux = aux.getPrevious();
             }
         }
@@ -151,6 +151,8 @@ public class DoubleLinkedListQueue<T> implements DoubleEndedQueue<T> {
 
     @Override
     public void sort(Comparator<T> comparator) {
+        if (comparator == null) throw new IllegalArgumentException();
+
         if (size > 1) {
             for (int i = 0; i < size; i++) {
                 DequeNode<T> currentNode = first;

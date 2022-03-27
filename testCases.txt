@@ -1,28 +1,57 @@
+DequeNode
+
+
+
+
 DoubleLinkedListQueueTest
 
     Inicialización correcta de la cola
 
-    Size (parametrizado con para probar con distintos tamaños)
+    size() con distintos tamaños
 
     Links (comprueba que previous y next son correctos para todos los nodos de la cola)
 
-    AppendLeft partiendo de size = 0
-    AppendLeft partiendo de size > 0
-    AppendLeft con argumento null
+    appendLeft() partiendo de size = 0
+    appendLeft() partiendo de size > 0
+    appendLeft() con argumento null
+    appendLeft() con un nodo que contiene null como item de argumento lanza IllegalArgumentException
 
-    Append partiendo de size = 0
-    Append partiendo de size > 0
-    Append con argumento null
+    append() partiendo de size = 0
+    append() partiendo de size > 0
+    append() con argumento null lanza IllegalArgumentException
+    append() con un nodo que contiene null como item de argumento lanza IllegalArgumentException
 
-    deleteFirst partiendo de size = 0
-    deleteFirst partiendo de size = 1
-    deleteFirst partiendo de size = 2
-    deleteFirst partiendo de size > 2
+    deleteFirst() partiendo de size = 0
+    deleteFirst() partiendo de size = 1
+    deleteFirst() partiendo de size = 2
+    deleteFirst() partiendo de size > 2
 
-    deleteLast partiendo de size = 0
-    deleteLast partiendo de size = 1
-    deleteLast  partiendo de size = 2
-    deleteLast  partiendo de size > 2
+    deleteLast() partiendo de size = 0
+    deleteLast() partiendo de size = 1
+    deleteLast()  partiendo de size = 2
+    deleteLast()  partiendo de size > 2
+
+    getAt() con argumentos válidos
+    getAt() con argumentos ni válidos lanza IllegalArgumentException
+
+    find() con argumento null lanza IllegalArgumentException
+    find() con argumentos válidos y presentes en la cola
+    find() con argumentos válidos, pero no presentes en la cola devuelve null
+
+    delete() con argumento null lanza IllegalArgumentException
+    delete() de nodo presente en la cola intermedio (no es first ni last)
+    delete() del único nodo de una cola
+    delete() de first en una cola de dos elementos
+    delete() de last en una cola de dos elementos
+    delete() del primer nodo en una cola de más de un elemento
+    delete() del último nodo en una cola de más de un elemento
+
+    sort() con argumento null lanza IllegalArgumentException
+    sort() con un Comparator válido
+
+
+
+
 
 
 
