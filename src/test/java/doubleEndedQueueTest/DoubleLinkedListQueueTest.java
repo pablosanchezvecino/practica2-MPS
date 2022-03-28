@@ -82,7 +82,7 @@ class DoubleLinkedListQueueTest {
      * Checks that the size, first value and last value of deque match the arguments received
      * @param expectedSize size deque is expected to have
      * @param expectedFirstValue first value deque is expected to have
-     * @param expectedLastValue last deque is expected to have
+     * @param expectedLastValue last value deque is expected to have
      */
     private void check(int expectedSize, int expectedFirstValue, int expectedLastValue) {
         int actualSize = deque.size();
@@ -238,7 +238,7 @@ class DoubleLinkedListQueueTest {
     }
 
     /**
-     * Tests that appendLeft(node containing null item) throws IllegalArgumentException
+     * Tests that append(node containing null item) throws IllegalArgumentException
      */
     @Test
     @DisplayName("append(node containing null item) throws IllegalArgumentException")
@@ -515,7 +515,7 @@ class DoubleLinkedListQueueTest {
         deque.delete(delete);
 
         check(expectedSize, expectedFirst, expectedLast);
-        assertNull(deque.peekFirst().getPrevious());
+        assertNull(deque.peekLast().getNext());
     }
 
     /**
@@ -574,7 +574,6 @@ class DoubleLinkedListQueueTest {
     @Test
     @DisplayName("sort() with valid Comparator and size > 1")
     void sort_ValidArgumentAndSizeIsOne() {
-
         List<Integer> expectedOrder = List.of(1);
         List<Integer> actualOrder = new ArrayList<>();
 
@@ -592,12 +591,11 @@ class DoubleLinkedListQueueTest {
     }
 
     /**
-     * Tests sort() with a valid Comparator
+     * Tests sort() with a valid Comparator and size > 1
      */
     @Test
     @DisplayName("sort() with valid Comparator and size > 1")
     void sort_ValidArgumentAndSizeIsGreaterThanOne() {
-
         List<Integer> expectedOrder = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         List<Integer> actualOrder = new ArrayList<>();
 

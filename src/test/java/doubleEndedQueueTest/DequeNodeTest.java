@@ -26,10 +26,10 @@ class DequeNodeTest {
     }
 
     /**
-     * Tests node creation with all attributes with not null attributes
+     * Tests node creation with all attributes not null
      */
     @Test
-    @DisplayName("Node creation with item = 1, previous = (node with item = 1) and next = (node with item = 3))")
+    @DisplayName("Node creation with item = 2, previous = (node with item = 1) and next = (node with item = 3))")
     void createNodeContainingAValueAndConnected() {
         DequeNode<Integer> previous = new DequeNode<>(1, null, null);
         DequeNode<Integer> next = new DequeNode<>(3, null, null);
@@ -256,10 +256,5 @@ class DequeNodeTest {
 
         assertTrue(node.isNotATerminalNode());
     }
-
-
-
-
-
 
 }
