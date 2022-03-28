@@ -75,10 +75,11 @@ DoubleLinkedListQueueTest
     delete() de last en una cola de dos elementos
     delete() del primer nodo en una cola de más de un elemento
     delete() del último nodo en una cola de más de un elemento
+    delete() con un nodo no presente en la cola
 
+    sort() con un Comparator válido y size = 1
+    sort() con un Comparator válido y size > 1
     sort() con argumento null lanza IllegalArgumentException
-    sort() con un Comparator válido
-
 
 
 

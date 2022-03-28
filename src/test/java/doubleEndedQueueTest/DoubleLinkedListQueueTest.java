@@ -553,13 +553,50 @@ class DoubleLinkedListQueueTest {
         assertEquals(9, deque.size());
     }
 
+    /**
+     * Tests delete() on a not present node
+     */
+    @Test
+    @DisplayName("delete(not present node) from deque with size = 10")
+    void delete_ArgumentIsNotPresentNode() {
+        appendRight(10);
+
+        DequeNode<Integer> delete = new DequeNode<>(11, null, null);
+
+        deque.delete(delete);
+
+        assertEquals(10, deque.size());
+    }
+
+    /**
+     * Tests sort() with a valid Comparator and size = 1
+     */
+    @Test
+    @DisplayName("sort() with valid Comparator and size > 1")
+    void sort_ValidArgumentAndSizeIsOne() {
+
+        List<Integer> expectedOrder = List.of(1);
+        List<Integer> actualOrder = new ArrayList<>();
+
+        appendRight(1);
+
+        deque.sort(new IntegerComparator());
+
+        DequeNode<Integer> current = deque.peekFirst();
+        while (current != null) {
+            actualOrder.add(current.getItem());
+            current = current.getNext();
+        }
+
+        assertEquals(expectedOrder, actualOrder);
+    }
 
     /**
      * Tests sort() with a valid Comparator
      */
     @Test
-    @DisplayName("sort() with valid Comparator")
-    void sort_ValidArgument() {
+    @DisplayName("sort() with valid Comparator and size > 1")
+    void sort_ValidArgumentAndSizeIsGreaterThanOne() {
 
         List<Integer> expectedOrder = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         List<Integer> actualOrder = new ArrayList<>();
